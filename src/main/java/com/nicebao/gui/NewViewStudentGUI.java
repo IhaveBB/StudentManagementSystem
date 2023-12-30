@@ -3,7 +3,7 @@ package com.nicebao.gui;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-import com.nicebao.student.Student;
+import com.nicebao.info.Student;
 import com.nicebao.jdbc.StudentDAO;
 
 import java.awt.*;
@@ -60,9 +60,7 @@ public class NewViewStudentGUI extends JFrame {
 		tableModel = new DefaultTableModel();
 		studentTable = new JTable(tableModel);
 		JScrollPane scrollPane = new JScrollPane(studentTable);
-
 		tableModel.setColumnIdentifiers(new String[]{"学号", "姓名", "性别", "生日", "住址", "手机号"});
-
 		panel.add(searchPanel, BorderLayout.NORTH);
 		panel.add(scrollPane, BorderLayout.CENTER);
 
@@ -77,8 +75,7 @@ public class NewViewStudentGUI extends JFrame {
 		buttonPanel.add(deleteBtn);
 		panel.add(buttonPanel, BorderLayout.SOUTH);
 
-		//”修改“按钮时间
-		//获取选中行的数据，然后创建一个新的窗口，在新的窗口中进行修改？
+
 		modifyBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -198,25 +195,20 @@ public class NewViewStudentGUI extends JFrame {
 					int confirmDialog = JOptionPane.showConfirmDialog(NewViewStudentGUI.this, "确定要删除所选行吗？", "确认删除", JOptionPane.YES_NO_OPTION);
 					if (confirmDialog == JOptionPane.YES_OPTION) {
 						long studentId = (long) studentTable.getValueAt(selectedRow, 0);
-
+						tableModel.removeRow(selectedRow);
 						try {
 							studentDAO.deleteStudent(studentId);
 						} catch (SQLException ex) {
 							throw new RuntimeException(ex);
 						}
-						List<Student> updatedStudents = null;
-						try {
-							updatedStudents = studentDAO.getAllStudent();
-						} catch (SQLException ex) {
-							throw new RuntimeException(ex);
-						}
-						displayStudents(updatedStudents);
+
 					}
 				}
 			}
 		});
 
 		add(panel);
+		setVisible(true);
 	}
 
 
@@ -232,16 +224,5 @@ public class NewViewStudentGUI extends JFrame {
 			Object[] rowData = {student.getStudentId(), student.getName(), student.getGender(), student.getBirthdate(), student.getAddress(), student.getPhoneNumber()};
 			tableModel.addRow(rowData); // 添加每个学生信息到表格
 		}
-	}
-
-
-
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				new NewViewStudentGUI().setVisible(true);
-			}
-		});
 	}
 }

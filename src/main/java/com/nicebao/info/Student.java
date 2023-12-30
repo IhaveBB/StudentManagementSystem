@@ -1,6 +1,5 @@
-package com.nicebao.student;
+package com.nicebao.info;
 
-import javax.swing.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;

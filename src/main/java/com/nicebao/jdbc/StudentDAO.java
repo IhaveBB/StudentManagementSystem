@@ -1,6 +1,5 @@
 package com.nicebao.jdbc;
-import com.nicebao.student.Student;
-import javafx.scene.input.DataFormat;
+import com.nicebao.info.Student;
 
 import javax.swing.*;
 import java.io.*;
@@ -8,11 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -20,7 +15,7 @@ public class StudentDAO {
 	private Connection connection;
 
 	/** @description: 与数据库进行交互
-	 * 		url:mysql.sqlpub.com:3306
+	 * 		url:mysql.sqlfpub.com:3306
 	 * 		账号：awfdgesw
 	 * 		密码：aa6e90fa392cf0d9
 	 * 		数据库名：student1125
@@ -48,7 +43,7 @@ public class StudentDAO {
 	 * @date: 2023/11/24
 	 */
 	public void addStudent(Student student) throws SQLException {
-		String query = "INSERT INTO students (studentId, name, gender, birthdate, address, phoneNumber) VALUES (?, ?, ?, ?, ?, ?)";
+		String query = "INSERT IGNORE INTO students (studentId, name, gender, birthdate, address, phoneNumber) VALUES (?, ?, ?, ?, ?, ?)";
 		PreparedStatement preparedStatement = connection.prepareStatement(query);
 		preparedStatement.setLong(1, student.getStudentId());
 		preparedStatement.setString(2, student.getName());
@@ -63,8 +58,8 @@ public class StudentDAO {
 
 
 	/** @description: 查询
-	 * @param: org.example.Student
-	 * @return: org.example.Student
+	 * @param: String
+	 * @return: List
 	 * @author: IhaveBB
 	 * @date: 2023/11/24
 	 */
@@ -92,6 +87,7 @@ public class StudentDAO {
 		ResultSet resultSet = preparedStatement.executeQuery();
 		while(resultSet.next()){
 			Student student = new Student();
+			//从左到右 每列仅可读取一次
 			student.setStudentId(resultSet.getLong("studentId"));
 			student.setName(resultSet.getString("name"));
 			student.setGender(resultSet.getString("gender"));
@@ -183,7 +179,7 @@ public class StudentDAO {
 		String query = "select * from students";
 		// 创建 CSV 文件并写入数据
 		File file = new File("students.csv");
-		Writer writer = new FileWriter(file);
+		Writer writer = new FileWriter(new File("students.csv"));
 		PreparedStatement preparedStatement = connection.prepareStatement(query);
 		ResultSet resultSet = preparedStatement.executeQuery();
 		while (resultSet.next()){
@@ -209,7 +205,7 @@ public class StudentDAO {
 			* @date: 2023/11/25
 			*/
 	public void importStudent(java.io.File fileToImport) throws FileNotFoundException, SQLException {
-		String insertQuery = "INSERT INTO students (studentId, name, gender, birthdate, address, phoneNumber) VALUES (?, ?, ?, ?, ?, ?)";
+		String insertQuery = "INSERT IGNORE INTO students (studentId, name, gender, birthdate, address, phoneNumber) VALUES (?, ?, ?, ?, ?, ?)";
 		PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
 
 		File file = new File(String.valueOf(fileToImport));
@@ -225,7 +221,6 @@ public class StudentDAO {
 			String address = data[4];
 			String phoneNumber = data[5];
 
-			// 插入到数据库中
 			preparedStatement.setLong(1, studentId);
 			preparedStatement.setString(2, name);
 			preparedStatement.setString(3, gender);
@@ -233,8 +228,8 @@ public class StudentDAO {
 			preparedStatement.setString(5, address);
 			preparedStatement.setString(6, phoneNumber);
 			preparedStatement.executeUpdate();
-			System.out.println("CSV文件数据成功导入到数据库！");
 		}
+		System.out.println("CSV文件数据成功导入到数据库！");
 	}
 
 }

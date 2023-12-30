@@ -13,20 +13,35 @@ public class DatabaseConnector {
 		* @date: 2023/11/25
 		*/
 
-	private static final String URL = "jdbc:mysql://mysql.sqlpub.com:3306/student1125";
-	private static final String USERNAME = "awfdgesw";
-	private static final String PASSWORD = "aa6e90fa392cf0d9";
+	private static final String URL = "jdbc:mysql://127.0.0.1:3306/students";
+	private static final String USERNAME = "root";
+	private static final String PASSWORD = "root";
 
 	public static Connection getConnection() throws SQLException {
 		return DriverManager.getConnection(URL, USERNAME, PASSWORD);
 	}
+
+	/** @description: 创建用户表
+	 * @param: void
+	 * @return: void
+	 * @author: IhaveBB
+	 * @date: 2023/12/6
+	 */
 	public static void createTable() throws SQLException {
 		Connection connection =  getConnection();
-		String query =	"CREATE TABLE IF NOT EXISTS students ( studentId BIGINT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(50) NOT NULL, gender VARCHAR(10) NOT NULL, birthdate DATE, address VARCHAR(100), phoneNumber VARCHAR(15));";
+		String query =	"CREATE TABLE IF NOT EXISTS students ( studentId BIGINT PRIMARY KEY, name VARCHAR(50) NOT NULL, gender VARCHAR(10) NOT NULL, birthdate DATE, address VARCHAR(100), phoneNumber VARCHAR(15));";
 		PreparedStatement preparedStatement = connection.prepareStatement(query);
 		preparedStatement.executeUpdate();
 	}
 }
+
+
+
+
+
+
+
+
 
 /** @description: 数据库名称	student1125
 数据库用户	awfdgesw

@@ -135,7 +135,7 @@ com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Incorrect dat
 
 #### 解决方案：
 
-**输入时，提示日期格式，并加入异常处理，更改完成后可正常输入日期**（已完成）
+**输入时，提示日期格式，并加入异常处理，更改完成后可正常输入日期**
 
 #### 举一反三
 
@@ -145,23 +145,13 @@ com.mysql.cj.jdbc.exceptions.MysqlDataTruncation: Data truncation: Incorrect dat
 ALTER TABLE students MODIFY COLUMN studentId String
 ```
 
-#### 修改完成后效果图
-
-![image-20231124223258512](./软件设计.assets/image-20231124223258512.png)
-
 ## 查找时错误
 
 #### 错误信息
 
-获取所有学生信息时，获取到的均为同一个学生
+- 获取所有学生信息时，获取到的均为同一个学生
 
-当多个学生名字相同时，按姓名搜索时获取到的均为同一个学生
-
-![image-20231125115631640](./软件设计.assets/image-20231125115631640.png)
-
-![image-20231125115655503](./软件设计.assets/image-20231125115655503.png)
-
-![image-20231127215546610](./软件设计.assets/image-20231127215546610.png)
+- 当多个学生名字相同时，按姓名搜索时获取到的均为同一个学生
 
 ![image-20231127215639319](./软件设计.assets/image-20231127215639319.png)
 
@@ -185,8 +175,6 @@ while (resultSet.next()){
 ```
 
 每次循环重新穿件一个新的student类
-
-![image-20231125120944888](./软件设计.assets/image-20231125120944888.png)
 
 ![image-20231127220342872](./软件设计.assets/image-20231127220342872.png)
 

@@ -1,6 +1,6 @@
 package com.nicebao.gui;
 
-import com.nicebao.student.Student;
+import com.nicebao.info.Student;
 import com.nicebao.jdbc.StudentDAO;
 
 import javax.swing.*;
@@ -62,7 +62,7 @@ public class AddStudentGUI extends JFrame {
 
 		JButton confirmBtn = getjButton();
 
-		JButton cancelBtn = new JButton("Cancel");
+		JButton cancelBtn = new JButton("取消");
 		cancelBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -116,7 +116,7 @@ public class AddStudentGUI extends JFrame {
 				} catch (SQLException ex) {
 					throw new RuntimeException(ex);
 				}
-
+				JOptionPane.showMessageDialog(null, "添加成功");
 				// 清空文本框
 				studentIdField.setText("");
 				nameField.setText("");
@@ -129,12 +129,4 @@ public class AddStudentGUI extends JFrame {
 	}
 
 
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				new AddStudentGUI().setVisible(true);
-			}
-		});
-	}
 }
