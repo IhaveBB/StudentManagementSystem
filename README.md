@@ -1,0 +1,2 @@
+# StudentManagementSystem
+java学生管理系统使用swing+Mysql
