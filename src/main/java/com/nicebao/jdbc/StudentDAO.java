@@ -14,20 +14,7 @@ import java.util.Scanner;
 public class StudentDAO {
 	private Connection connection;
 
-	/** @description: 与数据库进行交互
-	 * 		url:mysql.sqlfpub.com:3306
-	 * 		账号：awfdgesw
-	 * 		密码：aa6e90fa392cf0d9
-	 * 		数据库名：student1125
-	 * 		表明：students
-	 * 		端口：3306
-	 * 		地址：127.0.0.1
-	 * 		版本：Mysql 5.7
-	 * @param:
-	 * @return:
-	 * @author: IhaveBB
-	 * @date: 2023/11/24
-	 */
+
 	public StudentDAO() {
 		try {
 			connection = DatabaseConnector.getConnection();
